@@ -21,7 +21,7 @@ import shorter.usecase.RedirectUseCase;
 
 
 @RestController
-@RequestMapping("{id}")
+@RequestMapping("/{id}")
 public class RedirectController {
 
     private final RedirectUseCase redirectUseCase;
@@ -43,7 +43,7 @@ public class RedirectController {
         return ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, "");
     }
 
-    // 入力されたIDが存在しない場合にエラーレスポンスを返す
+    // 入力されたIDが存在しない場合にIndexページに移行する
     @ExceptionHandler({ NotFoundShortLinkException.class })
     public ResponseEntity<Void> notFoundShortLinkHandler(NotFoundShortLinkException ex) {
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).location(URI.create("/")).body(null);
