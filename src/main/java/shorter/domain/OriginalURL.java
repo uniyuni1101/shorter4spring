@@ -1,7 +1,9 @@
 package shorter.domain;
 
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public record OriginalURL(String originalURL) {
     public OriginalURL(String originalURL) {
@@ -12,8 +14,11 @@ public record OriginalURL(String originalURL) {
     private static void validate(String originalURL) {
         try {
             new URL(originalURL);
+            new URI(originalURL);
         } catch (MalformedURLException e) {
-            throw new OriginURLSyntaxException();
+            throw new InvalidOriginalURLException();
+        } catch (URISyntaxException e) {
+            throw new InvalidOriginalURLException();
         }
     }
 
